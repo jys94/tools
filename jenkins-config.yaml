@@ -50,8 +50,8 @@ jenkins:
         serviceAccount: "jenkins"
         volumes:
         - hostPathVolume:
-            hostPath: "/usr/bin/kubectl"
-            mountPath: "/usr/bin/kubectl"
+            hostPath: "/usr/local/bin/kubectl"
+            mountPath: "/usr/local/bin/kubectl"
         - hostPathVolume:
             hostPath: "/bin/docker"
             mountPath: "/bin/docker"
