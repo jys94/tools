@@ -51,7 +51,7 @@ fi
 echo "┌───────────────────────────────┐"
 echo "│ Total Character Counts: $view │"
 echo "└───────────────────────────────┘"
-for (( i=1;i<=$n;i++  )); do echo "  $i.txt: $(cat $i.txt | wc -c)"; done
+for (( i=1;i<=$n;i++ )); do echo "  $i.txt: $(cat $i.txt | wc -c)"; done
 -----
 
 cat n.txt
