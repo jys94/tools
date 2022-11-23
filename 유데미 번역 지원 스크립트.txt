@@ -12,6 +12,11 @@ max_unit=5000
 n=1
 save_file="$n.txt"
 line_tmp=""
+non_space_end_line=""
+word=""
+end_word_trail=""
+before_save_file_char_cnt=0
+cnt_cal=0
 rm -rf [1-9].txt [1-9][0-9].txt [1-9][0-9][0-9].txt
 for word in $input_file
 do
@@ -20,38 +25,49 @@ do
   word_trail=$(echo $end_word"107342")
   end_word_trail_index=$(echo $word_trail | wc -c)
   end_word_trail="$(echo "$word_trail" | cut -c $(expr $end_word_trail_index - 7)-)"
-  if [ $(expr $(expr $char_cnt + $(echo $line_tmp | wc -c)) / $max_unit) -eq $n ]; then
+  if [ $(expr $(expr $char_cnt - $cnt_cal + $(echo -n $line_tmp | wc -c) - $before_save_file_char_cnt) / $max_unit) -eq 1 ]; then
       sed -i "$(cat $n.txt | wc -l)d" $n.txt
+      before_save_file_char_cnt=$(expr $before_save_file_char_cnt + $(expr $(cat $save_file | wc -c) - 1))
       n=$(expr $n + 1)
       save_file="$n.txt"
   fi
   if [ ."107342" == $end_word_trail ]; then
-      echo "$line_tmp$word" >> $save_file
-      echo "" >> $save_file
+      echo -e "$line_tmp$word\n" >> $save_file
       line_tmp=""
-      echo $word
-      echo ""
+      echo -e $word"\n"
       char_cnt=$(expr $char_cnt + $end_word_index + 1)
+      cnt_cal=$(expr $n + $n)
   elif [ ?"107342" == $end_word_trail ]; then
       echo "$line_tmp$word" >> $save_file
       line_tmp=""
       echo $word
       char_cnt=$(expr $char_cnt + $end_word_index)
+      cnt_cal=$(expr $n + $n - 1)
   else
-      line_tmp=$line_tmp$word" "
+      non_space_end_line=$line_tmp$word
+      line_tmp=$non_space_end_line" "
       echo -n $word" "
       char_cnt=$(expr $char_cnt + $end_word_index)
+      cnt_cal=$(expr $n + $n - 1)
   fi
 done
-sed -i "$(cat $n.txt | wc -l)d" $n.txt
-view=" $(expr $char_cnt - $n)"
-if [ $(expr $char_cnt - $n) -gt 9999 ]; then
-  view="$(expr $char_cnt - $n)"
+view=$(expr $char_cnt - $cnt_cal)
+space=
+for (( i=1;i<=$(expr 5 - $(expr length $view));i++ )); do space+=" "; done
+if [ ."107342" != $end_word_trail ]; then
+  echo ""
+  if [ ?"107342" != $end_word_trail ]; then
+      echo ""
+      echo "$non_space_end_line" >> $save_file
+  fi
+else
+  sed -i "$(cat $n.txt | wc -l)d" $n.txt
 fi
+view=$space$view
 echo "┌───────────────────────────────┐"
 echo "│ Total Character Counts: $view │"
 echo "└───────────────────────────────┘"
-for (( i=1;i<=$n;i++ )); do echo "  $i.txt: $(cat $i.txt | wc -c)"; done
+for (( i=1;i<=$n;i++ )); do echo "  $i.txt: $(expr $(cat $i.txt | wc -c) - 1)"; done
 -----
 
 cat n.txt
