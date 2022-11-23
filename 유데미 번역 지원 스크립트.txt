@@ -1,0 +1,89 @@
+명랑하면서 기가 셈.
+완전 개인싸(친구들이랑 춤추고 이런 모습을 자주 보여줌).
+내가 이끌어 줄 때도 있고, 날 이끌어 줄 수도 있는 관계.
+어린애 같은 면과 어른스러운 면을 같이 갖춘 사람.
+감정에 솔직한 사람.
+
+
+
+[input.txt]
+-----
+<번역할 내용>
+-----
+
+[output.sh]
+-----
+#!/bin/bash
+input_file=$(cat input.txt)
+char_cnt=0
+max_unit=5000
+n=1
+save_file="$n.txt"
+line_tmp=""
+rm -rf [1-9].txt [1-9][0-9].txt [1-9][0-9][0-9].txt
+for word in $input_file
+do
+  end_word_index=$(echo $word | wc -c)
+  end_word="$(echo "$word" | cut -c $(expr $end_word_index - 1))"
+  word_trail=$(echo $end_word"107342")
+  end_word_trail_index=$(echo $word_trail | wc -c)
+  end_word_trail="$(echo "$word_trail" | cut -c $(expr $end_word_trail_index - 7)-)"
+  if [ $(expr $(expr $char_cnt + $(echo $line_tmp | wc -c)) / $max_unit) -eq $n ]; then
+      sed -i "$(cat $n.txt | wc -l)d" $n.txt
+      n=$(expr $n + 1)
+      save_file="$n.txt"
+  fi
+  if [ ."107342" == $end_word_trail ]; then
+      echo "$line_tmp$word" >> $save_file
+      echo "" >> $save_file
+      line_tmp=""
+      echo $word
+      echo ""
+      char_cnt=$(expr $char_cnt + $end_word_index + 1)
+  elif [ ?"107342" == $end_word_trail ]; then
+      echo "$line_tmp$word" >> $save_file
+      line_tmp=""
+      echo $word
+      char_cnt=$(expr $char_cnt + $end_word_index)
+  else
+      line_tmp=$line_tmp$word" "
+      echo -n $word" "
+      char_cnt=$(expr $char_cnt + $end_word_index)
+  fi
+done
+sed -i "$(cat $n.txt | wc -l)d" $n.txt
+view=" $(expr $char_cnt - $n)"
+if [ $(expr $char_cnt - $n) -gt 9999 ]; then
+  view="$(expr $char_cnt - $n)"
+fi
+echo "┌───────────────────────────────┐"
+echo "│ Total Character Counts: $view │"
+echo "└───────────────────────────────┘"
+for (( i=1;i<=$n;i++  )); do echo "  $i.txt: $(cat $i.txt | wc -c)"; done
+-----
+
+cat n.txt
+ > 5000자 단위로 구분하여 n이 1씩 증가하면서 해당하는 파일 이름에 내용이 저장됨(파파고에 최대 5000자만 담을 수 있음).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+====
+
+====
+
+====
+
+
+====
