@@ -67,7 +67,7 @@ view=$space$view
 echo "┌───────────────────────────────┐"
 echo "│ Total Character Counts: $view │"
 echo "└───────────────────────────────┘"
-for (( i=1;i<=$n;i++ )); do echo "  $i.txt: $(expr $(cat $i.txt | wc -c) - 1)"; done
+for (( i=1;i<=$n;i++ )); do echo "  $i.txt: $(expr $(cat $i.txt | wc -c) - 1)"; done; echo
 -----
 
 chmod +x output.sh
