@@ -25,7 +25,7 @@ do
   word_trail=$(echo $end_word"107342")
   end_word_trail_index=$(echo $word_trail | wc -c)
   end_word_trail="$(echo "$word_trail" | cut -c $(expr $end_word_trail_index - 7)-)"
-  if [ $(expr $(expr $char_cnt - $cnt_cal + $(echo -n $line_tmp | wc -c) - $before_save_file_char_cnt) / $max_unit) -eq 1 ]; then
+  if [ $(expr $(expr $char_cnt - $cnt_cal - 1 - $before_save_file_char_cnt) / $max_unit) -eq 1 ]; then
       sed -i "$(cat $n.txt | wc -l)d" $n.txt
       before_save_file_char_cnt=$(expr $before_save_file_char_cnt + $(expr $(cat $save_file | wc -c) - 1))
       n=$(expr $n + 1)
