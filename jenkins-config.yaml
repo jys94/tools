@@ -20,13 +20,15 @@ jenkins:
         value: "true"
       serverUrl: "https://kubernetes.default"
       templates:
-      - containers:
+      - nodeSelector:
+          eks.amazonaws.com/nodegroup: "nodegroup-cicd"
+        containers:
         - args: "^${computer.jnlpmac} ^${computer.name}"
           command: ""
           envVars:
           - envVar:
               key: "JENKINS_URL"
-              value: "http://3.39.162.11"
+              value: "http://jenkins.eksinfra.com"
           image: "jenkins/inbound-agent:4.3-4"
           livenessProbe:
             failureThreshold: 0
