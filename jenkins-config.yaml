@@ -28,7 +28,7 @@ jenkins:
           envVars:
           - envVar:
               key: "JENKINS_URL"
-              value: "http://jenkins.eksinfra.com"
+              value: "https://jenkins.eksinfra.com"
           image: "jenkins/inbound-agent:4.3-4"
           livenessProbe:
             failureThreshold: 0
