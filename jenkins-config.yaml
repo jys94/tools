@@ -49,7 +49,7 @@ jenkins:
         runAsUser: "1000"
         serviceAccount: "jenkins"
         nodeSelector:
-          eks.amazonaws.com/nodegroup: "nodegroup-cicd"
+          "eks.amazonaws.com/nodegroup": "nodegroup-cicd"
         volumes:
         - hostPathVolume:
             hostPath: "/home/ec2-user/bin/kubectl"
