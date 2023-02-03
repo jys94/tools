@@ -20,9 +20,7 @@ jenkins:
         value: "true"
       serverUrl: "https://kubernetes.default"
       templates:
-      - nodeSelector:
-          eks.amazonaws.com/nodegroup: "nodegroup-cicd"
-        containers:
+      - containers:
         - args: "^${computer.jnlpmac} ^${computer.name}"
           command: ""
           envVars:
