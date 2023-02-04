@@ -45,7 +45,7 @@ jenkins:
         name: "default"
         nodeUsageMode: NORMAL
         podRetention: "never"
-        runAsGroup: "993"
+        runAsGroup: "1950"
         runAsUser: "1000"
         serviceAccount: "jenkins"
         nodeSelector: "eks.amazonaws.com/nodegroup=nodegroup-cicd"
